@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_ui/colors.dart';
-import 'package:whatsapp_ui/screens/mobile_layout_screen.dart';
-import 'package:whatsapp_ui/screens/web_layout_screen.dart';
-import 'package:whatsapp_ui/utils/responsive_layout.dart';
+import 'package:flutterwhatsappclone/colors.dart';
+import 'package:flutterwhatsappclone/screens/mobile_layout_screen.dart';
+import 'package:flutterwhatsappclone/screens/web_layout_screen.dart';
+import 'package:flutterwhatsappclone/utils/responsive_layout.dart';
 
 void main() {
   runApp(const MyApp());

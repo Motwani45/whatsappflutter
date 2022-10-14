@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_ui/colors.dart';
+import 'package:flutterwhatsappclone/colors.dart';
 
 class MyMessageCard extends StatelessWidget {
   final String message;
@@ -37,7 +37,7 @@ class MyMessageCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 4,
+                bottom: 2,
                 right: 10,
                 child: Row(
                   children: [
