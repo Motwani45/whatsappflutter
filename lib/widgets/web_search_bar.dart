@@ -7,15 +7,16 @@ class WebSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.06,
+      height: MediaQuery.of(context).size.height * 0.08,
       width: MediaQuery.of(context).size.width * 0.25,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(vertical: 8,horizontal: 10),
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(color: dividerColor),
         ),
       ),
       child: TextField(
+        cursorColor: Colors.grey,
         decoration: InputDecoration(
           filled: true,
           fillColor: searchBarColor,
@@ -26,7 +27,7 @@ class WebSearchBar extends StatelessWidget {
           hintStyle: const TextStyle(fontSize: 14),
           hintText: 'Search or start new chat',
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
+            borderRadius: BorderRadius.circular(10.0),
             borderSide: const BorderSide(
               width: 0,
               style: BorderStyle.none,

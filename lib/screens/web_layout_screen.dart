@@ -46,12 +46,12 @@ class WebLayoutScreen extends StatelessWidget {
               children: [
                 const ChatAppBar(),
                 const SizedBox(height: 20),
-                const Expanded(
+                Expanded(
                   child: ChatList(),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.07,
-                  padding: const EdgeInsets.all(10),
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(color: dividerColor),
@@ -75,18 +75,18 @@ class WebLayoutScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 10,
-                            right: 15,
-                          ),
-                          child: TextField(
+                        child:  TextField(
+                          cursorColor: Colors.white,
+                          cursorHeight: 23,
+                          cursorWidth: 2,
+                          style: TextStyle(fontSize: 18),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: searchBarColor,
                               hintText: 'Type a message',
+                              hintStyle: TextStyle(fontSize: 18),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(10.0),
                                 borderSide: const BorderSide(
                                   width: 0,
                                   style: BorderStyle.none,
@@ -96,7 +96,7 @@ class WebLayoutScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+
                       IconButton(
                         onPressed: () {},
                         icon: const Icon(
