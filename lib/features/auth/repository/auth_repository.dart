@@ -18,9 +18,14 @@ class AuthRepository {
   void signInWithPhone(
       {required BuildContext context, required String phoneNumber}) async {
     try {
+      showLoaderDialog(context, "Sending OTP");
       await auth.verifyPhoneNumber(
           verificationCompleted: (credential) async {
+            // dismissDialog(context);
+            showLoaderDialog(context, "Verifying OTP");
+            showSnackBar(context: context, content: "Phone Number Verified");
             await auth.signInWithCredential(credential);
+            dismissDialog(context);
             Navigator.pushNamedAndRemoveUntil(
                 context, UserInformationScreen.routeName, (route) => false);
           },
@@ -28,6 +33,7 @@ class AuthRepository {
             throw Exception(e.message);
           },
           codeSent: (verificationId, resendToken) async {
+            dismissDialog(context);
             Navigator.pushNamed(context, OTPScreen.routeName,
                 arguments: verificationId);
           },
@@ -48,9 +54,12 @@ class AuthRepository {
         smsCode: userOTP,
       );
       await auth.signInWithCredential(credential);
+      dismissDialog(context);
+      showSnackBar(context: context, content: "Phone Number Verified");
       Navigator.pushNamedAndRemoveUntil(
           context, UserInformationScreen.routeName, (route) => false);
     } on FirebaseAuthException catch (e) {
+      dismissDialog(context);
       showSnackBar(context: context, content: e.message!);
     }
   }

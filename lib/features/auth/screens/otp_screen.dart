@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterwhatsappclone/common/utils/utils.dart';
 import 'package:flutterwhatsappclone/features/auth/controller/auth_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -30,10 +31,12 @@ void verifyOTP(BuildContext context,String userOTP,WidgetRef ref){
               SizedBox(
                 width: (size.width*0.5),
                 child: TextField(
+                  maxLength: 6,
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   onChanged: (val){
                     if(val.length==6){
+                      showLoaderDialog(context, "Verifying OTP");
                       verifyOTP(context, val.trim(), ref);
                     }
                   },
