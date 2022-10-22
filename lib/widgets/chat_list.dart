@@ -38,7 +38,6 @@ class ChatList extends StatelessWidget {
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent,
-          // duration: Duration(milliseconds: 300), curve: Curves.elasticOut
       );
     } else {
       Timer(Duration(milliseconds: 400), () => _scrollToBottom());

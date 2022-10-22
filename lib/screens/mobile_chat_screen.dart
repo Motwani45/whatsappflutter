@@ -52,7 +52,7 @@ class MobileChatScreen extends StatelessWidget {
                         ),
                         Text(
                           info[index]['name'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -90,31 +90,31 @@ class MobileChatScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      padding: EdgeInsets.only(left: 20.0),
                       child: Icon(
                         Icons.emoji_emotions,
                         color: Colors.grey,
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                       child: TextField(
-                        cursorColor: Colors.white,
+                        cursorColor: messageColor,
+                        cursorHeight: 25,
                         decoration: InputDecoration(
-                          hintText: 'Type a message!',
-                          hintStyle: TextStyle(color: Colors.grey),
+                          hintText: ' Type a message!',
+                          hintStyle: TextStyle(color: Colors.grey,fontSize: 17),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: const BorderSide(
+                            borderSide: BorderSide(
                               width: 0,
                               style: BorderStyle.none,
                             ),
                           ),
-                          contentPadding: const EdgeInsets.all(10),
+                          contentPadding: EdgeInsets.only(left: 10),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: const [
