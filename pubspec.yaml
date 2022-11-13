@@ -44,6 +44,12 @@ dependencies:
   country_picker: ^2.0.16
   flutter_riverpod: ^2.0.2
   firebase_app_check: ^0.0.9+1
+  image_picker: ^0.8.6
+  flutter_contacts: ^1.1.5
+  uuid: ^3.0.6
+  intl: ^0.17.0
+  visibility_aware_state: ^1.0.5
+  cached_network_image: ^3.2.2
 
 
 dev_dependencies:

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<key>NSContactsUsageDescription</key>
+     <string>Reason we need access to the contact list</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -47,5 +49,12 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    	<string>Photo Library Use</string>
+    	<key>NSCameraUsageDescription</key>
+    	<string>Camera Library Use</string>
+    	<key>NSMicrophoneUsageDescription</key>
+    	<string>Mic Use</string>
+
 </dict>
 </plist>
