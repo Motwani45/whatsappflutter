@@ -25,10 +25,25 @@ class MyMessageCard extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Stack(
             children: [
+              Padding(
+                padding: type==MessageEnum.text?const EdgeInsets.only(
+                  left: 8,
+                  top: 5,
+                  right: 55,
+                  bottom: 20,
+                ):
+                const EdgeInsets.only(
+                  left: 5,
+                  right: 5,
+                  top: 5,
+                  bottom: 25),
+                child: DisplayTextImageGif(type: type,message: message,)
+              ),
               Positioned(
                 bottom: 2,
                 right: 10,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       date,
@@ -48,43 +63,6 @@ class MyMessageCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
-                padding: type==MessageEnum.text?const EdgeInsets.only(
-                  left: 10,
-                  right: 30,
-                  top: 5,
-                  bottom: 20,
-                ):
-                const EdgeInsets.only(
-                  left: 5,
-                  right: 5,
-                  top: 5,
-                  bottom: 25),
-                child: DisplayTextImageGif(type: type,message: message,)
-              ),
-              // Positioned(
-              //   bottom: 2,
-              //   right: 10,
-              //   child: Row(
-              //     children: [
-              //       Text(
-              //         date,
-              //         style:const TextStyle(
-              //           fontSize: 13,
-              //           color: Colors.white60,
-              //         ),
-              //       ),
-              //       const SizedBox(
-              //         width: 5,
-              //       ),
-              //       const Icon(
-              //         Icons.done_all,
-              //         size: 20,
-              //         color: Colors.white60,
-              //       ),
-              //     ],
-              //   ),
-              // ),
             ],
           ),
         ),

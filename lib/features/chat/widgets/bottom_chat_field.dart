@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterwhatsappclone/common/enums/message_enum.dart';
 import 'package:flutterwhatsappclone/common/utils/utils.dart';
 import 'package:flutterwhatsappclone/features/chat/controller/chat_controller.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../../../colors.dart';
 
 class BottomChatField extends ConsumerStatefulWidget {
@@ -51,8 +52,9 @@ showSnackBar(context: context, content: "Voice message cant be send");
       height: MediaQuery.of(context).size.height * 0.1,
       child: Row(
         children: [
+          3.widthBox,
           Container(
-            width: MediaQuery.of(context).size.width * 0.87,
+            width: MediaQuery.of(context).size.width * 0.84,
             decoration: BoxDecoration(
                 color: mobileChatBoxColor,
                 borderRadius: BorderRadius.circular(20)),
@@ -121,16 +123,15 @@ showSnackBar(context: context, content: "Voice message cant be send");
               ],
             ),
           ),
-          Expanded(
-            child: CircleAvatar(
-              // radius: MediaQuery.of(context).size.width*0.07,
-              backgroundColor: const Color.fromARGB(255, 0, 168, 132),
-              child: GestureDetector(
-                onTap: isShowSendButton?sendTextMessage:sendVoiceMessage,
-                child: Icon(
-                  isShowSendButton ? Icons.send : Icons.mic,
-                  color: Colors.white,
-                ),
+          3.widthBox,
+          CircleAvatar(
+            radius: MediaQuery.of(context).size.width*0.06,
+            backgroundColor: const Color.fromARGB(255, 0, 168, 132),
+            child: GestureDetector(
+              onTap: isShowSendButton?sendTextMessage:sendVoiceMessage,
+              child: Icon(
+                isShowSendButton ? Icons.send : Icons.mic,
+                color: Colors.white,
               ),
             ),
           )
