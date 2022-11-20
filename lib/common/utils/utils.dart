@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -25,6 +26,17 @@ void showSnackBar({required BuildContext context,required String content}){
 void dismissDialog(BuildContext context){
   Navigator.of(context).pop();
 }
+Future<GiphyGif?> pickGif(BuildContext context) async{
+  GiphyGif? gif;
+  try{
+    // X98HIQQS3te38XxQmG9F2znhcN2gDpsl
+    gif=await Giphy.getGif(context: context, apiKey: "X98HIQQS3te38XxQmG9F2znhcN2gDpsl");
+  }
+  catch(e){
+    showSnackBar(context: context, content: e.toString());
+  }
+  return gif;
+}
 Future<File?> pickImageFromGallery(BuildContext context)async {
   File? image;
   try{
@@ -37,4 +49,17 @@ Future<File?> pickImageFromGallery(BuildContext context)async {
     showSnackBar(context: context, content: e.toString());
   }
   return image;
+}
+Future<File?> pickVideoFromGallery(BuildContext context)async {
+  File? video;
+  try{
+   final pickedVideo=await ImagePicker().pickVideo(source: ImageSource.gallery);
+   if(pickedVideo!=null){
+     video=File(pickedVideo.path);
+   }
+  }
+  catch(e){
+    showSnackBar(context: context, content: e.toString());
+  }
+  return video;
 }

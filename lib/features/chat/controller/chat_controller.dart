@@ -29,6 +29,21 @@ class ChatController{
     });
 
   }
+  void sendGifMessage( {required BuildContext context,
+    required String gifUrl,
+    required String receiverUserId}){
+    //   https://giphy.com/gifs/studiosoriginals-l0MYDMt4Iyp1R84fu change to
+    // https://i.giphy.com/media/l0MYDMt4Iyp1R84fu/200.gif
+    int gifUrlPartIndex=gifUrl.lastIndexOf('-')+1;
+    String gifBaseUrl="https://i.giphy.com/media/";
+    String gifFullUrl="$gifBaseUrl${gifUrl.substring(gifUrlPartIndex)}/200.gif";
+
+    ref.read(userDataAuthProvider).whenData((value) {
+
+      chatRepository.sendGifMessage(context: context, gifUrl: gifFullUrl, receiverUserId: receiverUserId, senderUserData: value!);
+    });
+
+  }
 Stream<List<ChatContact>> getChatContacts(){
     return chatRepository.getChatContacts();
 }
@@ -45,4 +60,5 @@ Stream<List<Message>> getChatStream(String receiverUserId){
     chatRepository.sendFileMessage(context: context, file: file, receiverUserId: receiverUserId, senderUserData: value!, ref: ref, messageEnum: messageEnum);
   });
   }
+
 }

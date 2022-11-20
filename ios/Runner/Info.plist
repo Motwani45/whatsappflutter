@@ -55,6 +55,8 @@
     	<string>Camera Library Use</string>
     	<key>NSMicrophoneUsageDescription</key>
     	<string>Mic Use</string>
+    	<key>NSAppleMusicUsageDescription</key>
+              <string>MyApp does not need this permission</string>
 
 </dict>
 </plist>
