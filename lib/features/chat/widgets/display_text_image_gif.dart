@@ -31,7 +31,10 @@ class _DisplayTextImageGifState extends State<DisplayTextImageGif> {
       audioPlayer.setUrl(widget.message).then((value) {
         print("Duration::::${value!.inSeconds}");
         isLoadedAudio = true;
-        fullDuration=value.inSeconds;
+        fullDuration = value.inSeconds;
+        setState(() {
+
+        });
       });
     }
   }
@@ -62,26 +65,46 @@ class _DisplayTextImageGifState extends State<DisplayTextImageGif> {
         );
         break;
       case MessageEnum.audio:
-        messageWidget = StatefulBuilder(builder: (context, setState) {
-          print("Loaded ${isLoadedAudio}");
-          return IconButton(
-              constraints: const BoxConstraints(minWidth: 100),
-              onPressed: () async {
-                if (isPlaying) {
-                  audioPlayer.pause();
-                } else {
-                  audioPlayer.play();
-                }
-                setState((){
-                isPlaying = !isPlaying;
-                });
+        messageWidget = isLoadedAudio
+            ?
+        StreamBuilder(
+                stream: getAudioStream(audioPlayer, isLoadedAudio),
+                builder: (context, snapShot) {
+                  print("Loaded ${isLoadedAudio}");
+                  print("SnapShot Data= ${snapShot.hasData}");
 
-              },
-              icon: Icon(
-                isPlaying ? Icons.pause_circle : Icons.play_circle,
-                size: 30,
-              ));
-        });
+                  if(snapShot.connectionState==ConnectionState.waiting||!snapShot.hasData){
+                    return const Loader();
+                  }
+                  print("SnapShot currentData= ${snapShot.data!.inSeconds}");
+                  int currentDuration=snapShot.data!.inSeconds;
+                  if(currentDuration==fullDuration){
+                    if(isPlaying){
+                      isPlaying=false;
+                    }
+                  }
+                  return IconButton(
+                      constraints: const BoxConstraints(minWidth: 100),
+                      onPressed: () async {
+                        if(currentDuration<fullDuration){
+                          if(isPlaying){
+                            audioPlayer.pause();
+                          }
+                          else{
+                            audioPlayer.play();
+                          }
+                        }
+                        else if(currentDuration==fullDuration){
+                          audioPlayer.setUrl(widget.message);
+                        }
+                        isPlaying=!isPlaying;
+                      },
+                      icon: Icon(
+                        isPlaying ? Icons.pause_circle : Icons.play_circle,
+                        size: 30,
+                      ));
+                })
+            : const Loader();
         break;
       case MessageEnum.video:
         messageWidget = VideoPlayerItem(
@@ -111,8 +134,8 @@ class _DisplayTextImageGifState extends State<DisplayTextImageGif> {
     return messageWidget;
   }
 
-  Stream<PlayerState> getAudioStream(
+  Stream<Duration?> getAudioStream(
       AudioPlayer audioPlayer, bool isLoadedAudio) {
-    return audioPlayer.playerStateStream;
+    return audioPlayer.positionStream;
   }
 }
