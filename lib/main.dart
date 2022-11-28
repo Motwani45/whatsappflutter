@@ -42,7 +42,7 @@ class MyApp extends ConsumerWidget {
         )
       ),
       onGenerateRoute: (settings)=>generateRoute(settings),
-      home: ref.watch(userDataAuthProvider).
+      home: ref.watch(currentUserDataAuthProvider).
       when(data:(user){
         if(user==null){
           print ("Landing");

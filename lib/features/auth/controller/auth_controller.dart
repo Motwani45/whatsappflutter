@@ -9,9 +9,13 @@ final authControllerProvider=Provider((ref) {
 final authRepository=ref.watch(authRepositoryProvider);
   return AuthController(authRepository: authRepository,ref: ref);
 });
-final userDataAuthProvider=FutureProvider((ref) {
+final currentUserDataAuthProvider=FutureProvider((ref) {
   final authController=ref.watch(authControllerProvider);
   return authController.getCurrentUserData();
+});
+final userDataAuthProvider=FutureProvider.family<UserModel?,String>((ref, userId) {
+  final authController=ref.watch(authControllerProvider);
+  return authController.getUserData(userId: userId);
 });
 class AuthController{
   final AuthRepository authRepository;
@@ -23,6 +27,11 @@ class AuthController{
   });
   Future<UserModel?> getCurrentUserData() async{
     return authRepository.getCurrentUserData();
+  }
+  Future<UserModel?> getUserData({
+  required String userId
+}) async{
+    return authRepository.getUserData(userId);
   }
   void signInWithPhone(
       {required BuildContext context, required String phoneNumber}) async{

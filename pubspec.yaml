@@ -59,6 +59,7 @@ dependencies:
   path_provider: ^2.0.11
   just_audio: ^0.9.30
   video_player: ^2.4.7
+  swipe_to: ^1.0.2
 
 
 dev_dependencies:

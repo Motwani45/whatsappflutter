@@ -28,6 +28,14 @@ class AuthRepository {
     }
     return user;
   }
+  Future<UserModel?> getUserData(String userId) async{
+    var userdata=await firestore.collection('users').doc(userId).get();
+    UserModel? user;
+    if(userdata.data()!=null){
+      user=UserModel.fromMap(userdata.data()!);
+    }
+    return user;
+  }
 
   void signInWithPhone(
       {required BuildContext context, required String phoneNumber}) async {
