@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterwhatsappclone/common/enums/message_enum.dart';
@@ -14,26 +15,40 @@ import 'package:intl/intl.dart';
 
 class ChatList extends ConsumerStatefulWidget {
   final String receiverId;
+  final String username;
 
-  const ChatList({Key? key, required this.receiverId}) : super(key: key);
+  const ChatList({Key? key, required this.receiverId, required this.username})
+      : super(key: key);
 
   @override
   ConsumerState createState() => _ChatListState();
 }
 
-class _ChatListState extends ConsumerState<ChatList> {
+class _ChatListState extends ConsumerState<ChatList>
+    with WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   void dispose() {
     super.dispose();
     _scrollController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
-  void onMessageSwipe(
-      String message,bool isMe,MessageEnum messageEnum
-      ){
 
-    ref.read(messageReplyProvider.state).update((state) =>MessageReply(message: message, isMe: isMe, messageEnum: messageEnum));
+  void onMessageSwipe(String message, bool isMe, MessageEnum messageEnum) {
+    ref.read(messageReplyProvider.state).update((state) =>
+        MessageReply(message: message, isMe: isMe, messageEnum: messageEnum));
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
   }
 
   @override
@@ -55,6 +70,12 @@ class _ChatListState extends ConsumerState<ChatList> {
             itemBuilder: (context, index) {
               final messageData = snapshot.data![index];
               final timeData = snapshot.data![index].timeSent;
+              if (!messageData.isSeen &&
+                  messageData.receiverId ==
+                      FirebaseAuth.instance.currentUser!.uid) {
+                ref.read(chatControllerProvider).seenFeature(
+                    context, widget.receiverId, messageData.messageId);
+              }
               if (messageData.senderId != widget.receiverId) {
                 return MyMessageCard(
                   message: messageData.text,
@@ -64,8 +85,9 @@ class _ChatListState extends ConsumerState<ChatList> {
                   repliedText: messageData.repliedMessage,
                   username: messageData.repliedTo,
                   repliedMessageType: messageData.repliedMessageType,
-                  onRightSwipe: (){
-                    onMessageSwipe(messageData.text,true,messageData.type);
+                  isSeen:messageData.isSeen,
+                  onRightSwipe: () {
+                    onMessageSwipe(messageData.text, true, messageData.type);
                   },
                 );
               }
@@ -73,12 +95,12 @@ class _ChatListState extends ConsumerState<ChatList> {
                 message: messageData.text,
                 date: DateFormat.Hm().format(timeData),
                 type: messageData.type,
-                size:MediaQuery.of(context).size,
+                size: MediaQuery.of(context).size,
                 repliedText: messageData.repliedMessage,
                 username: messageData.repliedTo,
                 repliedMessageType: messageData.repliedMessageType,
-                onRightSwipe: (){
-                  onMessageSwipe(messageData.text,false,messageData.type);
+                onRightSwipe: () {
+                  onMessageSwipe(messageData.text, false, messageData.type);
                 },
               );
             },

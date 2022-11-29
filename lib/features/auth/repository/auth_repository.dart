@@ -8,6 +8,7 @@ import 'package:flutterwhatsappclone/common/repositories/common_firebase_storage
 import 'package:flutterwhatsappclone/common/utils/utils.dart';
 import 'package:flutterwhatsappclone/features/auth/screens/otp_screen.dart';
 import 'package:flutterwhatsappclone/features/auth/screens/user_information_screen.dart';
+import 'package:flutterwhatsappclone/models/message.dart';
 import 'package:flutterwhatsappclone/models/user_model.dart';
 import 'package:flutterwhatsappclone/screens/mobile_layout_screen.dart';
 

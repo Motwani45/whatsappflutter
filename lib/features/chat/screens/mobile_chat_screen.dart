@@ -39,7 +39,7 @@ class MobileChatScreen extends ConsumerWidget {
           child: Column(
             children: [
               UserInfoBar(uid: uid, name: name),
-              Expanded(child: ChatList(receiverId: uid,)),
+              Expanded(child: ChatList(receiverId: uid,username:name)),
               BottomChatField(receiverUserId: uid,username:name),
             ],
           ),

@@ -8,10 +8,12 @@ import 'package:flutterwhatsappclone/common/enums/message_enum.dart';
 import 'package:flutterwhatsappclone/common/providers/message_reply_provider.dart';
 import 'package:flutterwhatsappclone/common/repositories/common_firebase_storage_repository.dart';
 import 'package:flutterwhatsappclone/common/utils/utils.dart';
+import 'package:flutterwhatsappclone/features/auth/controller/auth_controller.dart';
 import 'package:flutterwhatsappclone/models/chat_contact.dart';
 import 'package:flutterwhatsappclone/models/message.dart';
 import 'package:flutterwhatsappclone/models/user_model.dart';
 import 'package:uuid/uuid.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 final chatRepositoryProvider = Provider((ref) {
   return ChatRepository(
@@ -183,9 +185,23 @@ class ChatRepository {
       for (var document in event.docs) {
         messages.add(Message.fromMap(document.data()));
       }
-      // messages.sort((a,b){
-      //   return a.timeSent.compareTo(b.timeSent);
-      // });
+      return messages;
+    });
+  }
+  Stream<List<Message>> getReceiverChatStream(String receiverUserId) {
+    return firestore
+        .collection('users')
+        .doc(receiverUserId)
+        .collection('chats')
+        .doc(auth.currentUser!.uid)
+        .collection('messages')
+        .orderBy('timeSent', descending: true)
+        .snapshots()
+        .map((event) {
+      List<Message> messages = [];
+      for (var document in event.docs) {
+        messages.add(Message.fromMap(document.data()));
+      }
       return messages;
     });
   }
@@ -280,5 +296,27 @@ class ChatRepository {
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }
+  }
+  void seenFeature(BuildContext context,String userId,String messageId) async {
+    try{
+      await firestore
+          .collection('users')
+          .doc(userId)
+          .collection('chats')
+          .doc(auth.currentUser!.uid)
+          .collection('messages')
+          .doc(messageId)
+          .update({"isSeen":true});
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('chats')
+          .doc(userId)
+          .collection('messages')
+          .doc(messageId)
+          .update({"isSeen":true});
+    }
+    catch(e){
+      showSnackBar(context: context, content: e.toString());}
   }
 }

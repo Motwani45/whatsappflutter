@@ -19,8 +19,9 @@ class MyMessageCard extends ConsumerWidget {
   final String username;
   final MessageEnum repliedMessageType;
   final Size size;
+  final bool isSeen;
 
-  const MyMessageCard({Key? key, required this.message, required this.date,required this.type, required this.onRightSwipe, required this.repliedText, required this.username, required this.repliedMessageType,required this.size}) : super(key: key);
+  const MyMessageCard({Key? key, required this.message, required this.date,required this.type, required this.isSeen,required this.onRightSwipe, required this.repliedText, required this.username, required this.repliedMessageType,required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
@@ -83,10 +84,11 @@ class MyMessageCard extends ConsumerWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(
-                        Icons.done_all,
+                      Icon(
+                        isSeen?
+                        Icons.done_all:Icons.done,
                         size: 20,
-                        color: Colors.white60,
+                        color: isSeen?Colors.lightBlueAccent:Colors.white60,
                       ),
                     ],
                   ),

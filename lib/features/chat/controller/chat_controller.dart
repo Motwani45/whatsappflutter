@@ -67,6 +67,9 @@ class ChatController {
   Stream<List<Message>> getChatStream(String receiverUserId) {
     return chatRepository.getChatStream(receiverUserId);
   }
+  void seenFeature(BuildContext context,String userId,String messageId){
+    chatRepository.seenFeature(context, userId, messageId);
+  }
 
   void sendFileMessage(
       {required BuildContext context,
@@ -81,7 +84,7 @@ class ChatController {
           receiverUserId: receiverUserId,
           senderUserData: value!,
           ref: ref,
-          messageEnum: messageEnum,messageReply:messageReply );
+          messageEnum: messageEnum,messageReply:messageReply);
     });
   }
 }
