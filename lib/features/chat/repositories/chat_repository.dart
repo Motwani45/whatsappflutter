@@ -162,14 +162,14 @@ class ChatRepository {
     });
   }
 
-  _getChatContactModel(Map<String, dynamic> data) {
-    return ChatContact(
-        name: data['name'],
-        profilePic: data['profilePic'],
-        contactId: data['contactId'],
-        timeSent: data['timeSent'].toDate(),
-        lastMessage: data['lastMessage']);
-  }
+  // _getChatContactModel(Map<String, dynamic> data) {
+  //   return ChatContact(
+  //       name: data['name'],
+  //       profilePic: data['profilePic'],
+  //       contactId: data['contactId'],
+  //       timeSent: data['timeSent'].toDate(),
+  //       lastMessage: data['lastMessage']);
+  // }
 
   Stream<List<Message>> getChatStream(String receiverUserId) {
     return firestore
