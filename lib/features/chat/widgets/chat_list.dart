@@ -24,21 +24,18 @@ class ChatList extends ConsumerStatefulWidget {
   ConsumerState createState() => _ChatListState();
 }
 
-class _ChatListState extends ConsumerState<ChatList>
-    with WidgetsBindingObserver {
+class _ChatListState extends ConsumerState<ChatList> {
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     super.dispose();
     _scrollController.dispose();
-    WidgetsBinding.instance.removeObserver(this);
   }
 
   void onMessageSwipe(String message, bool isMe, MessageEnum messageEnum) {
@@ -46,10 +43,6 @@ class _ChatListState extends ConsumerState<ChatList>
         MessageReply(message: message, isMe: isMe, messageEnum: messageEnum));
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-  }
 
   @override
   Widget build(BuildContext context) {

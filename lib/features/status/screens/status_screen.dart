@@ -31,18 +31,17 @@ class _StatusScreenState extends State<StatusScreen> {
           : StoryView(
               storyItems: storyItems,
               controller: controller,
-            onVerticalSwipeComplete: (direction){
-                if(direction==Direction.down){
+              onVerticalSwipeComplete: (direction) {
+                if (direction == Direction.down) {
                   Navigator.pop(context);
                 }
-            },),
+              },
+            ),
     );
   }
 
   void initStoryPageItems() {
-    for (int i = 0; i < widget.status.photoUrl.length; i++) {
-      storyItems.add(StoryItem.pageImage(
-          url: widget.status.photoUrl[i], controller: controller));
-    }
+    storyItems.add(StoryItem.pageImage(
+        url: widget.status.photoUrl, controller: controller));
   }
 }

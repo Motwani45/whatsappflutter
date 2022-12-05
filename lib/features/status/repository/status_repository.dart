@@ -57,46 +57,26 @@ class StatusRepository {
           uidWhoCanSee.add(userData.uid);
         }
       }
-      List<String> statusImageUrls = [];
-      var statusesSnapshot = await firestore
-          .collection('status')
-          .where('uid', isEqualTo: auth.currentUser!.uid)
-          // .where('createdAt',isLessThan:DateTime.now().subtract(const Duration(hours: 24)))
-          .get();
-      if (statusesSnapshot.docs.isNotEmpty) {
-        Status status = Status.fromMap(statusesSnapshot.docs[0].data());
-        statusImageUrls = status.photoUrl;
-        print(statusImageUrls);
-        // statusImageUrls.add(imageUrl);
-        statusImageUrls.insert(0,imageUrl);
-        print(statusImageUrls);
-        await firestore
-            .collection('status')
-            .doc(statusesSnapshot.docs[0].id)
-            .update({'photoUrl': statusImageUrls});
-        return;
-      } else {
-        statusImageUrls = [imageUrl];
-        print("snapshot is empty");
-      }
       Status status = Status(
           uid: uid,
           username: username,
           phoneNumber: phoneNumber,
-          photoUrl: statusImageUrls,
+          photoUrl: imageUrl,
           createdAt: DateTime.now(),
           profilePic: profilePic,
           statusId: statusId,
           whoCanSee: uidWhoCanSee);
       await firestore.collection('status').doc(statusId).set(status.toMap());
+      return;
     } catch (e) {
-      showSnackBar(context: context, content: e.toString());
+      var dummyContext=context;
+      showSnackBar(context: dummyContext, content: e.toString());
     }
   }
 
   Future<List<Status>> getStatus(BuildContext context) async {
     List<Status> statusData = [];
-    try {
+    // try {
       List<Contact> contacts = [];
       if (await FlutterContacts.requestPermission()) {
         contacts = await FlutterContacts.getContacts(withProperties: true);
@@ -116,10 +96,11 @@ class StatusRepository {
           }
         }
       }
-    } catch (e) {
-      if (kDebugMode) print(e);
-      showSnackBar(context: context, content: e.toString());
-    }
+    // }
+    // catch (e) {
+      // if (kDebugMode) print(e);
+      // showSnackBar(context: context, content: e.toString());
+    // }
     return statusData;
   }
 }

@@ -18,7 +18,7 @@ class StatusController{
   });
   void addStatus({
     required File statusImage,
-    required BuildContext context}){
+    required BuildContext context,}){
     ref.watch(currentUserDataAuthProvider).whenData((value) {
     statusRepository.uploadStatus(
         username: value!.name,

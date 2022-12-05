@@ -16,7 +16,12 @@ class StatusContactsScreen extends ConsumerWidget {
     return FutureBuilder<List<Status>>(
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Loader();
+          return const Text("No Status");
+        }
+        debugPrint("status snapshot data: ${snapshot.hasData}");
+        if(!snapshot.hasData){
+          print("No STATUS");
+          return const Text("No Status");
         }
         return ListView.builder(
             itemBuilder: (context, index) {
@@ -28,7 +33,7 @@ class StatusContactsScreen extends ConsumerWidget {
                       Navigator.pushNamed(context, StatusScreen.routeName,arguments: statusData);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.only(top:4,bottom: 8.0),
                       child: ListTile(
                         title: Text(
                           statusData.username,
@@ -50,7 +55,7 @@ class StatusContactsScreen extends ConsumerWidget {
               );
             }, itemCount: snapshot.data!.length);
       },
-      future: ref.read(statusControllerProvider).getStatus(context),
+      future: ref.watch(statusControllerProvider).getStatus(context),
     );
   }
 }

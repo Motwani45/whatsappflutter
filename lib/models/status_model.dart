@@ -2,7 +2,7 @@ class Status{
   final String uid;
   final String username;
   final String phoneNumber;
-  final List<String> photoUrl;
+  final String photoUrl;
   final DateTime createdAt;
   final String profilePic;
   final String statusId;
@@ -37,11 +37,11 @@ class Status{
       uid: map['uid'] as String,
       username: map['username'] as String,
       phoneNumber: map['phoneNumber'] as String,
-      photoUrl: map['photoUrl'] as List<String>,
+      photoUrl: map['photoUrl'] as String,
       createdAt: map['createdAt'].toDate(),
       profilePic: map['profilePic'] as String,
       statusId: map['statusId'] as String,
-      whoCanSee: map['whoCanSee'] as List<String>,
+      whoCanSee: List<String>.from(map['whoCanSee']),
     );
   }
 }
