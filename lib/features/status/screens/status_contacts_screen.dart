@@ -16,12 +16,12 @@ class StatusContactsScreen extends ConsumerWidget {
     return FutureBuilder<List<Status>>(
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("No Status");
+          return const Loader();
         }
         debugPrint("status snapshot data: ${snapshot.hasData}");
-        if(!snapshot.hasData){
+        if(!snapshot.hasData||(snapshot.hasData&&snapshot.data!.length==0)){
           print("No STATUS");
-          return const Text("No Status");
+          return const Center(child: const Text("No Status"));
         }
         return ListView.builder(
             itemBuilder: (context, index) {
