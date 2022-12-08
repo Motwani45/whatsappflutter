@@ -28,7 +28,21 @@ class SelectContactRepository {
     }
     return contacts;
   }
-
+  Future<List<Contact>> getRegisteredContacts() async{
+    List<Contact> registeredContacts=[];
+    List<Contact> contacts=await getContacts();
+    var usersDataMap=await firestore.collection('users').get();
+    for(int i=0;i<usersDataMap.docs.length;i++){
+      UserModel model=UserModel.fromMap(usersDataMap.docs[i].data());
+      for(var contact in contacts){
+        String number=contact.phones[0].number.replaceAll(" ", '');
+        if(number==model.phoneNumber){
+          registeredContacts.add(contact);
+        }
+      }
+    }
+    return registeredContacts;
+  }
   void selectContact(Contact selectedContact, BuildContext context) async {
     try {
       var userCollection = await firestore.collection('users').get();

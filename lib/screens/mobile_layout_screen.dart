@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterwhatsappclone/colors.dart';
 import 'package:flutterwhatsappclone/common/utils/utils.dart';
 import 'package:flutterwhatsappclone/features/auth/controller/auth_controller.dart';
+import 'package:flutterwhatsappclone/features/group/screens/create_group_screen.dart';
 import 'package:flutterwhatsappclone/features/select_contacts/screens/select_contact_screen.dart';
 import 'package:flutterwhatsappclone/features/status/screens/confirm_status_screen.dart';
 import 'package:flutterwhatsappclone/features/status/screens/status_contacts_screen.dart';
@@ -20,6 +21,7 @@ class MobileLayoutScreen extends ConsumerStatefulWidget {
 class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   late TabController tabController;
+
   // late Stream<int> tabStream ;
 
   @override
@@ -27,7 +29,7 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
     super.initState();
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(() {
-        _tabListner();
+      _tabListner();
     });
     WidgetsBinding.instance.addObserver(this);
   }
@@ -75,10 +77,20 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
               icon: const Icon(Icons.search, color: Colors.grey),
               onPressed: () {},
             ),
-            IconButton(
-              icon: const Icon(Icons.more_vert, color: Colors.grey),
-              onPressed: () {},
-            ),
+            PopupMenuButton(
+                icon: const Icon(
+                  Icons.more_vert,
+                  color: Colors.grey,
+                ),
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: const Text("Create Group"),
+                        onTap: () => Future(
+                          () => Navigator.pushNamed(
+                              context, CreateGroupScreen.routeName),
+                        ),
+                      ),
+                    ])
           ],
           bottom: TabBar(
             controller: tabController,
@@ -102,29 +114,31 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
             ],
           ),
         ),
-        body: TabBarView(
-            controller: tabController,
-            children: const [
+        body: TabBarView(controller: tabController, children: const [
           ContactsList(),
           StatusContactsScreen(),
           Text("Calls")
         ]),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async{
-            if(tabController.index==0) {
+          onPressed: () async {
+            if (tabController.index == 0) {
               Navigator.pushNamed(context, SelectContactScreen.routeName);
-            }
-            else{
-              File? pickedImage=await pickImageFromGallery(context);
-              if(pickedImage!=null){
+            } else {
+              File? pickedImage = await pickImageFromGallery(context);
+              if (pickedImage != null) {
                 // ignore: use_build_context_synchronously
-                Navigator.pushNamed(context, ConfirmStatusScreen.routeName,arguments: pickedImage);
+                Navigator.pushNamed(context, ConfirmStatusScreen.routeName,
+                    arguments: pickedImage);
               }
             }
-    },
+          },
           backgroundColor: tabColor,
           child: Icon(
-            tabController.index==0?Icons.comment_sharp:tabController.index==1?Icons.add:Icons.call,
+            tabController.index == 0
+                ? Icons.comment_sharp
+                : tabController.index == 1
+                    ? Icons.add
+                    : Icons.call,
             color: Colors.white,
           ),
         ),
@@ -133,8 +147,6 @@ class _MobileLayoutScreenState extends ConsumerState<MobileLayoutScreen>
   }
 
   void _tabListner() {
-    setState(() {
-
-    });
+    setState(() {});
   }
 }

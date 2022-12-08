@@ -7,6 +7,10 @@ final getContactsProvider=FutureProvider.autoDispose((ref){
   final selectContactRepository=ref.watch(selectContactsRepositoryProvider);
   return selectContactRepository.getContacts();
 });
+final getRegisteredContactsProvider=FutureProvider.autoDispose((ref){
+  final selectContactRepository=ref.watch(selectContactsRepositoryProvider);
+  return selectContactRepository.getRegisteredContacts();
+});
 final selectContactControllerProvider=Provider((ref) {
   final selectContactRepository=ref.watch(selectContactsRepositoryProvider);
   return SelectContactController(ref: ref, selectContactRepository: selectContactRepository);
