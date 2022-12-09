@@ -13,10 +13,10 @@ import 'package:velocity_x/velocity_x.dart';
 class MobileChatScreen extends ConsumerWidget {
   final String name;
   final String uid;
-
+  final bool isGroupChat;
   static const String routeName = '/mobile_chat_screen';
 
-  const MobileChatScreen({Key? key, required this.name, required this.uid})
+  const MobileChatScreen({Key? key, required this.name, required this.uid,required this.isGroupChat})
       : super(key: key);
 
   @override
@@ -38,9 +38,9 @@ class MobileChatScreen extends ConsumerWidget {
           ),
           child: Column(
             children: [
-              UserInfoBar(uid: uid, name: name),
-              Expanded(child: ChatList(receiverId: uid,username:name)),
-              BottomChatField(receiverUserId: uid,username:name),
+              UserInfoBar(uid: uid, name: name,isGroupChat:isGroupChat),
+              Expanded(child: ChatList(receiverId: uid,username:name,isGroupChat:isGroupChat)),
+              BottomChatField(receiverUserId: uid,username:name,isGroupChat:isGroupChat,),
             ],
           ),
         ),

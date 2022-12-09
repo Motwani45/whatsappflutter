@@ -5,6 +5,7 @@ class GroupModel{
   final List<String> membersUid;
   final String groupPic;
   final String senderId;
+  final DateTime timeSent;
 
   const GroupModel({
     required this.name,
@@ -13,6 +14,7 @@ class GroupModel{
     required this.membersUid,
     required this.groupPic,
     required this.senderId,
+    required this.timeSent
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class GroupModel{
       'membersUid': this.membersUid,
       'groupPic': this.groupPic,
       'senderId': this.senderId,
+      'timeSent':this.timeSent
     };
   }
 
@@ -34,6 +37,7 @@ class GroupModel{
       membersUid: List<String>.from(map['membersUid']),
       groupPic: map['groupPic'] as String,
       senderId: map['senderId'] as String,
+      timeSent: map['timeSent'].toDate()
     );
   }
 }

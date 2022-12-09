@@ -8,7 +8,6 @@ import 'package:flutterwhatsappclone/common/providers/message_reply_provider.dar
 import 'package:flutterwhatsappclone/common/widgets/loader.dart';
 import 'package:flutterwhatsappclone/features/chat/controller/chat_controller.dart';
 import 'package:flutterwhatsappclone/features/chat/widgets/sender_message_card.dart';
-import 'package:flutterwhatsappclone/info.dart';
 import 'package:flutterwhatsappclone/models/message.dart';
 import 'package:flutterwhatsappclone/features/chat/widgets/my_message_card.dart';
 import 'package:intl/intl.dart';
@@ -16,8 +15,9 @@ import 'package:intl/intl.dart';
 class ChatList extends ConsumerStatefulWidget {
   final String receiverId;
   final String username;
+  final bool isGroupChat;
 
-  const ChatList({Key? key, required this.receiverId, required this.username})
+  const ChatList({Key? key, required this.receiverId, required this.username,required this.isGroupChat})
       : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _ChatListState extends ConsumerState<ChatList> {
   Widget build(BuildContext context) {
     scrolling();
     return StreamBuilder<List<Message>>(
-        stream:
+        stream:widget.isGroupChat?ref.read(chatControllerProvider).getGroupChatStream(widget.receiverId):
             ref.read(chatControllerProvider).getChatStream(widget.receiverId),
         builder: (context, snapshot) {
           scrolling();

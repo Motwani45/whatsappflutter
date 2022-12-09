@@ -8,6 +8,7 @@ import 'package:flutterwhatsappclone/common/repositories/common_firebase_storage
 import 'package:flutterwhatsappclone/common/utils/utils.dart';
 import 'package:flutterwhatsappclone/features/auth/screens/otp_screen.dart';
 import 'package:flutterwhatsappclone/features/auth/screens/user_information_screen.dart';
+import 'package:flutterwhatsappclone/models/group_model.dart';
 import 'package:flutterwhatsappclone/models/message.dart';
 import 'package:flutterwhatsappclone/models/user_model.dart';
 import 'package:flutterwhatsappclone/screens/mobile_layout_screen.dart';
@@ -120,6 +121,9 @@ class AuthRepository {
   }
   Stream<UserModel> userData(String userId){
     return firestore.collection("users").doc(userId).snapshots().map((event) => UserModel.fromMap(event.data()!));
+  }
+  Stream<GroupModel> groupData(String userId){
+    return firestore.collection("groups").doc(userId).snapshots().map((event) => GroupModel.fromMap(event.data()!));
   }
   void setUserState(bool isOnline) async{
     await firestore.collection('users').doc(auth.currentUser!.uid).update({'isOnline':isOnline});

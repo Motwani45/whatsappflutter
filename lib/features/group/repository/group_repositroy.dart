@@ -47,7 +47,9 @@ class GroupRepository {
           lastMessage: "",
           membersUid: [auth.currentUser!.uid, ...uids],
           groupPic: profilePicUrl,
-          senderId: auth.currentUser!.uid);
+          senderId: auth.currentUser!.uid,
+      timeSent: DateTime.now());
+
       await firestore.collection('groups').doc(groupId).set(group.toMap());
     } catch (e) {
       showSnackBar(context: context, content: e.toString());

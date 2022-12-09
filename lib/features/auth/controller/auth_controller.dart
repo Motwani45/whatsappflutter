@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutterwhatsappclone/features/auth/repository/auth_repository.dart';
+import 'package:flutterwhatsappclone/models/group_model.dart';
 import 'package:flutterwhatsappclone/models/message.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -52,6 +53,9 @@ class AuthController{
   }
   Stream<UserModel> userDataById(String userId){
     return authRepository.userData(userId);
+  }
+  Stream<GroupModel> groupDataById(String userId){
+    return authRepository.groupData(userId);
   }
   void setUserState(bool isOnline) {
     authRepository.setUserState(isOnline);
